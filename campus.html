@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Two-Campus Email Security Scenario</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7f5;
+        }
+
+        header {
+            background: #e91e63;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .campus-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .campus {
+            flex: 1;
+            min-width: 280px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .main-campus {
+            border-left: 6px solid #e91e63;
+        }
+
+        .branch-campus {
+            border-left: 6px solid #8e2455;
+        }
+
+        .flow-box {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .flow-item {
+            display: inline-block;
+            padding: 15px 20px;
+            margin: 5px;
+            border: 2px solid #8e2455;
+            border-radius: 8px;
+            background: #fafafa;
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .security {
+            line-height: 1.8;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #eef5ee;
+            border: 1px solid #b8d8b8;
+            word-break: break-word;
+            line-height: 1.7;
+        }
+
+        .attack {
+            border-left: 6px solid #c62828;
+        }
+
+        .back {
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>ABC Training Institute</h1>
+
+    <p>Two-Campus Email Security Scenario</p>
+
+    <p>NS-P09 - SPF, DKIM and DMARC</p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- Scenario -->
+
+    <div class="card">
+
+        <h2>Project Scenario</h2>
+
+        <p>
+            ABC Training Institute operates through two campuses:
+            Main Campus and Branch Campus.
+        </p>
+
+        <p>
+            Both campuses use the common email domain:
+            <b>training-institute.local</b>
+        </p>
+
+        <p>
+            The email security system protects communication
+            between the two campuses and helps identify
+            unauthorized or spoofed email messages.
+        </p>
+
+    </div>
+
+
+    <!-- Campuses -->
+
+    <div class="card">
+
+        <h2>Two-Campus Environment</h2>
+
+        <div class="campus-container">
+
+            <div class="campus main-campus">
+
+                <h2> Main Campus</h2>
+
+                <p>
+                    <b>Role:</b> Main Training Campus
+                </p>
+
+                <p>
+                    <b>Email Domain:</b>
+                    training-institute.local
+                </p>
+
+                <p>
+                    Authorized staff use the institute
+                    email domain for communication.
+                </p>
+
+            </div>
+
+
+            <div class="campus branch-campus">
+
+                <h2> Branch Campus</h2>
+
+                <p>
+                    <b>Role:</b> Branch Training Campus
+                </p>
+
+                <p>
+                    <b>Email Domain:</b>
+                    training-institute.local
+                </p>
+
+                <p>
+                    Authorized staff communicate with
+                    the Main Campus using institute email.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Mail Flow -->
+
+    <div class="card">
+
+        <h2>Two-Campus Mail Flow</h2>
+
+        <p>
+            The following flow represents secure email
+            communication between the two campuses.
+        </p>
+
+
+        <div class="flow-box">
+
+            <div class="flow-item">
+                 Main Campus
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                Email Domain
+                <br>
+                training-institute.local
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                SPF
+                <br>
+                DKIM
+                <br>
+                DMARC
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                 Branch Campus
+            </div>
+
+        </div>
+
+
+        <p>
+            SPF verifies the authorized sending server,
+            DKIM verifies the digital signature, and
+            DMARC evaluates authentication and domain
+            alignment.
+        </p>
+
+    </div>
+
+
+    <!-- Reverse Flow -->
+
+    <div class="card">
+
+        <h2>Reverse Mail Flow</h2>
+
+        <div class="flow-box">
+
+            <div class="flow-item">
+                 Branch Campus
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                SPF + DKIM + DMARC
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                 Main Campus
+            </div>
+
+        </div>
+
+        <p>
+            The same email authentication controls are
+            applied when the Branch Campus sends email
+            to the Main Campus.
+        </p>
+
+    </div>
+
+
+    <!-- Spoofing Flow -->
+
+    <div class="card attack">
+
+        <h2>External Spoofing Scenario</h2>
+
+        <p>
+            An external attacker may attempt to send an
+            email pretending to be an authorized user of
+            the institute domain.
+        </p>
+
+
+        <div class="flow-box">
+
+            <div class="flow-item">
+                 External Attacker
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                Fake
+                <br>
+                training-institute.local
+                <br>
+                From Address
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                SPF
+                <br>
+                DKIM
+                <br>
+                DMARC
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                Authentication /
+                <br>
+                Alignment Check
+            </div>
+
+            <div class="arrow">
+                ↓
+            </div>
+
+            <div class="flow-item">
+                Security Result
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Security Controls -->
+
+    <div class="card">
+
+        <h2>Email Security Controls</h2>
+
+        <div class="security">
+
+            <p>
+                <b>SPF:</b>
+                Checks whether the sending mail server
+                is authorized for the domain.
+            </p>
+
+            <p>
+                <b>DKIM:</b>
+                Verifies the digital signature associated
+                with the email.
+            </p>
+
+            <p>
+                <b>DMARC:</b>
+                Checks authentication and domain alignment
+                and applies the domain policy.
+            </p>
+
+            <p>
+                <b>Email Header Analysis:</b>
+                Examines SPF, DKIM and DMARC authentication
+                results from email headers.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Simulation -->
+
+    <div class="card">
+
+        <h2>Mail Flow Simulation</h2>
+
+        <p>
+            Select a scenario to demonstrate the
+            email security process.
+        </p>
+
+
+        <button onclick="mainToBranch()">
+            Main Campus → Branch Campus
+        </button>
+
+
+        <button onclick="branchToMain()">
+            Branch Campus → Main Campus
+        </button>
+
+
+        <button onclick="externalToCampus()">
+            External/Spoofed Email → Campus
+        </button>
+
+
+        <div id="flowResult" class="result">
+
+            Select a scenario above.
+
+        </div>
+
+    </div>
+
+
+    <!-- Back -->
+
+    <div class="card back">
+
+        <button onclick="goBack()">
+            Back to Security Dashboard
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+function mainToBranch() {
+
+    document.getElementById("flowResult").innerHTML =
+
+        "<b>Main Campus → Branch Campus</b><br><br>" +
+
+        "Sender: Main Campus<br>" +
+
+        "Receiver: Branch Campus<br>" +
+
+        "Domain: training-institute.local<br><br>" +
+
+        "<b>Security Process:</b><br>" +
+
+        "1. SPF checks sender server authorization.<br>" +
+
+        "2. DKIM verifies the digital signature.<br>" +
+
+        "3. DMARC checks authentication and alignment.<br><br>" +
+
+        "<b>Result:</b> Campus-to-campus email security checks completed.";
+
+}
+
+
+function branchToMain() {
+
+    document.getElementById("flowResult").innerHTML =
+
+        "<b>Branch Campus → Main Campus</b><br><br>" +
+
+        "Sender: Branch Campus<br>" +
+
+        "Receiver: Main Campus<br>" +
+
+        "Domain: training-institute.local<br><br>" +
+
+        "<b>Security Process:</b><br>" +
+
+        "1. SPF checks sender server authorization.<br>" +
+
+        "2. DKIM verifies the digital signature.<br>" +
+
+        "3. DMARC checks authentication and alignment.<br><br>" +
+
+        "<b>Result:</b> Campus-to-campus email security checks completed.";
+
+}
+
+
+function externalToCampus() {
+
+    document.getElementById("flowResult").innerHTML =
+
+        "<b>External/Spoofed Email → Campus</b><br><br>" +
+
+        "Sender: External/Unauthorized Source<br>" +
+
+        "Target: Main Campus or Branch Campus<br><br>" +
+
+        "<b>Security Process:</b><br>" +
+
+        "1. SPF checks sender authorization.<br>" +
+
+        "2. DKIM checks the digital signature.<br>" +
+
+        "3. DMARC checks authentication and alignment.<br><br>" +
+
+        "<b>Result:</b> An unauthenticated or misaligned " +
+
+        "message can be identified according to the " +
+
+        "domain security policy.";
+
+}
+
+
+function goBack() {
+
+    window.location.href = "dashboard.html";
+
+}
+
+
+</script>
+
+
+</body>
+</html>
