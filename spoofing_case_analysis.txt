@@ -1,0 +1,47 @@
+ABC Training Institute
+Project: NS-P09 Email Domain Security
+Scenario: Two-Campus Training Institute
+
+SPOOFING CASE ANALYSIS
+
+Scenario:
+An unauthorized sender attempts to send an email pretending to be
+from the ABC Training Institute domain.
+
+Visible From Domain:
+abctraining.edu
+
+SPF Check:
+The unauthorized sending server is not authorized by the SPF policy.
+Therefore, SPF may result in FAIL or SOFTFAIL.
+
+DKIM Check:
+The unauthorized email does not have a valid DKIM signature from
+the authorized institute domain.
+Therefore, DKIM may result in FAIL.
+
+DMARC Check:
+If SPF and DKIM authentication/alignment do not satisfy DMARC,
+the message fails DMARC.
+
+DMARC Policy Response:
+
+p=none:
+The message is monitored and authentication results are recorded.
+
+p=quarantine:
+The suspicious message may be placed in spam/quarantine.
+
+p=reject:
+The suspicious unauthenticated or misaligned message should be
+rejected.
+
+Security Benefit:
+SPF identifies authorized sending servers.
+DKIM verifies the authorized digital signature.
+DMARC checks authentication and domain alignment and applies
+the configured policy.
+
+Conclusion:
+Using SPF, DKIM and DMARC together reduces the risk of successful
+email-domain spoofing against the training institute.

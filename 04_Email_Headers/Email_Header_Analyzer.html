@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Header Analyzer - NS-P09</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f8d7e8;
+            margin: 0;
+        }
+
+        header {
+            background: #8e2455;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 25px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #999;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f1f8f2;
+            border: 1px solid #4caf50;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Email Domain Security System</h2>
+    <p>NS-P09 - SPF, DKIM and DMARC</p>
+</header>
+
+<div class="container">
+
+    <h2>Email Header Analyzer</h2>
+
+    <p>
+        Paste an instructor-provided email header below.
+    </p>
+
+    <textarea id="emailHeader"
+        placeholder="Paste complete email header here..."></textarea>
+
+    <br>
+
+    <button onclick="analyzeHeader()">
+        Analyze Email Header
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+function getResult(text, type) {
+
+    const match = text.match(
+        new RegExp(type + "\\s*=\\s*([a-zA-Z]+)", "i")
+    );
+
+    if (match) {
+        return match[1].toUpperCase();
+    }
+
+    return "NOT FOUND";
+}
+
+
+function getValue(text, pattern) {
+
+    const match = text.match(pattern);
+
+    if (match) {
+        return match[1].trim();
+    }
+
+    return "Not found";
+}
+
+
+function analyzeHeader() {
+
+    const header =
+        document.getElementById("emailHeader").value;
+
+    const result =
+        document.getElementById("result");
+
+
+    if (header.trim() === "") {
+
+        result.innerHTML =
+            "<p class='fail'>Please paste an email header first.</p>";
+
+        return;
+    }
+
+
+    // Authentication results
+    const spf = getResult(header, "spf");
+    const dkim = getResult(header, "dkim");
+    const dmarc = getResult(header, "dmarc");
+
+
+    // SPF authenticated domain
+    const spfDomain = getValue(
+        header,
+        /smtp\.mailfrom\s*=\s*([^;\s]+)/i
+    );
+
+
+    // DKIM signing domain
+   const dkimDomain = getValue(
+    header,
+    /header\.i\s*=\s*@?([^;\s]+)/i
+);
+
+
+    // DMARC From domain
+    const fromDomain = getValue(
+        header,
+        /header\.from\s*=\s*([^;\s]+)/i
+    );
+
+
+    // SPF alignment
+    let spfAlignment = "NOT AVAILABLE";
+
+    if (
+        spfDomain !== "Not found" &&
+        fromDomain !== "Not found"
+    ) {
+
+        spfAlignment =
+            spfDomain.toLowerCase() === fromDomain.toLowerCase()
+            ? "ALIGNED"
+            : "MISALIGNED";
+    }
+
+
+    // DKIM alignment
+    let dkimAlignment = "NOT AVAILABLE";
+
+    if (
+        dkimDomain !== "Not found" &&
+        fromDomain !== "Not found"
+    ) {
+
+        dkimAlignment =
+            dkimDomain.toLowerCase() === fromDomain.toLowerCase()
+            ? "ALIGNED"
+            : "MISALIGNED";
+    }
+
+
+    // Overall result
+    let finalResult = "REVIEW REQUIRED";
+
+    if (
+        spf === "PASS" &&
+        dkim === "PASS" &&
+        dmarc === "PASS"
+    ) {
+
+        finalResult = "AUTHENTICATION PASS";
+    }
+
+
+    if (
+        spf === "FAIL" ||
+        dkim === "FAIL" ||
+        dmarc === "FAIL"
+    ) {
+
+        finalResult = "AUTHENTICATION FAILURE";
+    }
+
+
+    result.innerHTML = `
+
+        <div class="result">
+
+            <h3>Email Authentication Analysis</h3>
+
+            <p>
+                <b>SPF Result:</b>
+                <span class="${spf === 'PASS' ? 'pass' : 'fail'}">
+                    ${spf}
+                </span>
+            </p>
+
+            <p>
+                <b>SPF Authenticated Domain:</b>
+                ${spfDomain}
+            </p>
+
+            <p>
+                <b>DKIM Result:</b>
+                <span class="${dkim === 'PASS' ? 'pass' : 'fail'}">
+                    ${dkim}
+                </span>
+            </p>
+
+            <p>
+                <b>DKIM Signing Domain:</b>
+                ${dkimDomain}
+            </p>
+
+            <p>
+                <b>DMARC Result:</b>
+                <span class="${dmarc === 'PASS' ? 'pass' : 'fail'}">
+                    ${dmarc}
+                </span>
+            </p>
+
+            <p>
+                <b>DMARC From Domain:</b>
+                ${fromDomain}
+            </p>
+
+            <hr>
+
+            <h3>DMARC Alignment Analysis</h3>
+
+            <p>
+                <b>SPF Alignment:</b>
+                ${spfAlignment}
+            </p>
+
+            <p>
+                <b>DKIM Alignment:</b>
+                ${dkimAlignment}
+            </p>
+
+            <hr>
+
+            <p>
+                <b>Overall Result:</b>
+                ${finalResult}
+            </p>
+
+            <p>
+                <b>Security Note:</b>
+                Authentication success does not automatically mean
+                that the email content is trustworthy.
+            </p>
+
+        </div>
+    `;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+ABC Training Institute
+Project: NS-P09 Email Domain Security
+Scenario: Two-Campus Training Institute
+
+Domain:
+abctraining.edu
+
+DMARC Policy:
+
+v=DMARC1; p=none; rua=mailto:dmarc@abctraining.edu
+
+Policy Explanation:
+
+p=none
+Monitor email authentication results without rejecting messages.
+
+p=quarantine
+Unauthenticated or misaligned emails may be treated as suspicious
+or placed in spam/quarantine.
+
+p=reject
+Unauthenticated or misaligned emails should be rejected.
+
+DMARC Alignment:
+
+SPF Alignment:
+The SPF authenticated domain should align with the visible From domain.
+
+DKIM Alignment:
+The DKIM signing domain should align with the visible From domain.
+
+Recommended Deployment:
+
+1. Start with p=none for monitoring.
+2. Analyse SPF, DKIM and DMARC results.
+3. Move to p=quarantine after validation.
+4. Move to p=reject when legitimate mail is confirmed.

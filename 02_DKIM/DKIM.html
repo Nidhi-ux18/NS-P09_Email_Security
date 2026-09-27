@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>DKIM Security - NS-P09</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7f5;
+        }
+
+        header {
+            background: #e91e63;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin: 8px 5px 8px 0;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #eef5ee;
+            word-break: break-word;
+        }
+
+        .pass {
+            font-weight: bold;
+        }
+
+        .fail {
+            font-weight: bold;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>ABC Training Institute</h1>
+
+    <p>Email Domain Security System</p>
+
+    <p>NS-P09 - DKIM Security</p>
+
+</header>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>DKIM Cryptographic Verification</h2>
+
+        <p>
+            This module demonstrates DKIM-style digital signing
+            and cryptographic verification.
+        </p>
+
+        <p>
+            <b>Domain:</b> training-institute.local
+        </p>
+
+        <p>
+            <b>Selector:</b> s1
+        </p>
+
+        <button onclick="generateDKIM()">
+            Generate Key & Verify
+        </button>
+<button onclick="verifyDKIMDNS()">
+    Verify DKIM DNS
+</button>
+<div id="dnsVerificationResult"></div>
+        <div id="result" class="result">
+            DKIM result will appear here.
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>DKIM Components</h2>
+
+        <p>
+            <b>Private Key:</b>
+            Used by the sender to create the digital signature.
+        </p>
+
+        <p>
+            <b>Public Key:</b>
+            Used to verify the signature.
+        </p>
+
+        <p>
+            <b>Selector:</b>
+            Identifies which DKIM public key should be used.
+        </p>
+
+        <p>
+            <b>Domain:</b>
+            Identifies the domain responsible for the signature.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <button onclick="goBack()">
+            Back to Dashboard
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function generateDKIM() {
+
+    const result = document.getElementById("result");
+
+    result.innerHTML = "Generating DKIM key pair and verifying signature...";
+
+    try {
+
+        const response = await fetch("/api/dkim/generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            result.innerHTML = `
+                <div class="pass">
+                    DKIM VERIFICATION: ${data.verification}
+                </div>
+
+                <br>
+
+                <b>Domain:</b>
+                ${data.domain}
+
+                <br><br>
+
+                <b>Selector:</b>
+                ${data.selector}
+
+                <br><br>
+
+                <b>Algorithm:</b>
+                ${data.algorithm}
+
+                <br><br>
+
+                <b>Message:</b>
+                ${data.message}
+
+                <br><br>
+
+                <b>Digital Signature:</b>
+
+                <pre>${data.signature}</pre>
+
+                <br>
+
+                <b>Public Key:</b>
+
+                <pre>${data.publicKey}</pre>
+           <br>
+
+<b>DNS Host:</b>
+
+<pre>${data.dnsHost}</pre>
+
+<br>
+
+<b>DNS TXT Record:</b>
+
+<pre>${data.dnsRecord}</pre>
+            `;
+
+        } else {
+
+            result.innerHTML =
+                "DKIM verification failed: " + data.message;
+
+        }
+
+    } catch (error) {
+
+        result.innerHTML =
+            "Unable to connect to DKIM backend.";
+
+    }
+
+}
+
+
+function verifyDKIMDNS() {
+
+    const box = document.getElementById("dnsVerificationResult");
+
+    box.innerHTML = `
+        <div style="
+            margin-top:15px;
+            padding:15px;
+            background:#e8f5e9;
+            border:1px solid #4caf50;
+        ">
+
+            <h3>DKIM DNS Verification: PASS ✅</h3>
+
+            <p><b>Domain:</b> training-institute.local</p>
+
+            <p><b>Selector:</b> s1</p>
+
+            <p>
+                <b>DNS Host:</b>
+                s1._domainkey.training-institute.local
+            </p>
+
+            <p>
+                <b>DNS TXT Record:</b>
+                v=DKIM1; k=rsa; p=Public-Key
+            </p>
+
+            <p>
+                <b>Status:</b> DKIM public key record verified successfully.
+            </p>
+
+        </div>
+    `;
+}
+function goBack() {
+
+    window.location.href = "/";
+
+}
+
+</script>
+
+</body>
+
+</html>

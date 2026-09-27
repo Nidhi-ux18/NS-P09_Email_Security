@@ -1,0 +1,56 @@
+NS-P09 EMAIL DOMAIN SECURITY
+ABC Training Institute - Two Campus Scenario
+
+DNS TEST RESULTS
+================
+
+1. SPF DNS Lookup
+
+Command:
+nslookup -type=TXT google.com
+
+Result:
+SPF FOUND
+
+SPF Record:
+v=spf1 include:_spf.google.com ~all
+
+
+2. DMARC DNS Lookup
+
+Command:
+nslookup -type=TXT _dmarc.google.com
+
+Result:
+DMARC FOUND
+
+DMARC Record:
+v=DMARC1; p=reject; rua=mailto:mailauth-reports@google.com
+
+
+3. Project Scenario
+
+Organization:
+ABC Training Institute
+
+Architecture:
+Two-Campus Email Security
+
+Campus A:
+Main Campus
+
+Campus B:
+Branch Campus
+
+Security Mechanisms:
+SPF
+DKIM
+DMARC
+Email Header Analysis
+DNS Verification
+
+
+Conclusion:
+DNS TXT records were successfully checked using nslookup.
+The project demonstrates email authentication and domain
+security for a two-campus training institute environment.

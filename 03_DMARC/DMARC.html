@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DMARC Security - NS-P09</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8d7e8;
+        }
+
+        header {
+            background: #6a1b4d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 850px;
+            margin: 25px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #999;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+
+        button {
+            padding: 10px 18px;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #edf7ed;
+        }
+
+        .policy {
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 5px solid #6a1b4d;
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>DMARC Security</h2>
+    <p>NS-P09 - Email Domain Security</p>
+</header>
+
+<div class="container">
+
+    <div class="box">
+        <h2>DMARC DNS Checker</h2>
+
+        <p>
+            Check the DMARC TXT record of an email domain.
+        </p>
+
+        <input type="text" id="domain" value="google.com">
+
+        <br>
+
+        <button onclick="checkDMARC()">Check DMARC</button>
+
+        <div id="result" class="result">
+            DMARC result will appear here.
+        </div>
+    </div>
+
+
+    <div class="box">
+        <h2>DMARC Policy Stages</h2>
+
+        <div class="policy">
+            <b>p=none</b><br>
+            Monitoring mode. Emails are not blocked.
+        </div>
+
+        <div class="policy">
+            <b>p=quarantine</b><br>
+            Suspicious or failed emails are treated as potentially unsafe.
+        </div>
+
+        <div class="policy">
+            <b>p=reject</b><br>
+            Failed authentication is rejected according to the DMARC policy.
+        </div>
+    </div>
+
+
+    <div class="box">
+        <h2>DMARC Alignment</h2>
+
+        <p>
+            DMARC checks whether the domain authenticated by SPF or DKIM
+            aligns with the visible From domain.
+        </p>
+
+        <p>
+            <b>SPF Alignment:</b> SPF authenticated domain matches the From domain.
+        </p>
+
+        <p>
+            <b>DKIM Alignment:</b> DKIM signing domain matches the From domain.
+        </p>
+    </div>
+
+</div>
+
+
+<script>
+
+async function checkDMARC() {
+
+    const domain = document.getElementById("domain").value.trim();
+    const result = document.getElementById("result");
+
+    if (!domain) {
+        result.innerHTML = "Please enter a domain.";
+        return;
+    }
+
+    result.innerHTML = "Checking DMARC DNS record...";
+
+    try {
+
+        const response = await fetch(
+            "/api/dmarc?domain=" + encodeURIComponent(domain)
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            result.innerHTML =
+                "<b>DMARC FOUND ✅</b><br><br>" +
+                "<b>Domain:</b> " + data.domain + "<br>" +
+                "<b>DMARC Record:</b> " + data.record;
+
+        } else {
+
+            result.innerHTML =
+                "<b>DMARC NOT FOUND ❌</b><br><br>" +
+                "No DMARC TXT record was found.";
+
+        }
+
+    } catch (error) {
+
+        result.innerHTML =
+            "<b>Error:</b> Unable to connect to the DMARC API.";
+
+    }
+}
+function checkAlignment() {
+
+    const fromDomain =
+        document.getElementById("fromDomain").value.trim().toLowerCase();
+
+    const spfDomain =
+        document.getElementById("spfDomain").value.trim().toLowerCase();
+
+    const dkimDomain =
+        document.getElementById("dkimDomain").value.trim().toLowerCase();
+
+    const result =
+        document.getElementById("alignmentResult");
+
+    const spfAligned = fromDomain === spfDomain;
+    const dkimAligned = fromDomain === dkimDomain;
+
+    let dmarcResult = "FAIL";
+
+    if (spfAligned || dkimAligned) {
+        dmarcResult = "PASS";
+    }
+
+    result.innerHTML =
+        "<b>DMARC ALIGNMENT RESULT</b><br><br>" +
+
+        "<b>From Domain:</b> " + fromDomain + "<br>" +
+
+        "<b>SPF Alignment:</b> " +
+        (spfAligned ? "PASS ✅" : "FAIL ❌") + "<br>" +
+
+        "<b>DKIM Alignment:</b> " +
+        (dkimAligned ? "PASS ✅" : "FAIL ❌") + "<br><br>" +
+
+        "<b>DMARC Result:</b> " + dmarcResult;
+}
+</script>
+<div class="box">
+    <h2>DMARC Alignment Testing</h2>
+
+    <p>Enter the domains involved in email authentication.</p>
+
+    <label>From Domain:</label><br>
+    <input type="text" id="fromDomain" value="training-institute.local">
+
+    <br>
+
+    <label>SPF Authenticated Domain:</label><br>
+    <input type="text" id="spfDomain" value="training-institute.local">
+
+    <br>
+
+    <label>DKIM Signing Domain:</label><br>
+    <input type="text" id="dkimDomain" value="training-institute.local">
+
+    <br><br>
+
+    <button onclick="checkAlignment()">Check Alignment</button>
+
+    <div id="alignmentResult" class="result">
+        Alignment result will appear here.
+    </div>
+</div>
+</body>
+</html>

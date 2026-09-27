@@ -1,0 +1,42 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="q98uZGXZRxmTTM-orNHU">
+    <mxGraphModel dx="987" dy="1149" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="&lt;div&gt;NS-P09 – DKIM ARCHITECTURE&lt;/div&gt;&lt;div&gt;Two-Campus Training Institute&lt;/div&gt;" vertex="1">
+          <mxGeometry height="13" width="53" x="336" y="-41" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-17" edge="1" parent="1" source="UV9Y0IfonfwzCure9Kj9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="372" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-15" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;CAMPUS A&lt;/div&gt;&lt;div&gt;Main Campus&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="165" y="89" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-37" edge="1" parent="1" source="UV9Y0IfonfwzCure9Kj9-18" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" target="UV9Y0IfonfwzCure9Kj9-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-18" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;" value="&lt;div&gt;CAMPUS B&lt;/div&gt;&lt;div&gt;Branch Campus&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="80" x="186" y="562" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-31" edge="1" parent="1" source="UV9Y0IfonfwzCure9Kj9-23" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="UV9Y0IfonfwzCure9Kj9-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-23" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;INSTITUTE MAIL SERVER&lt;/div&gt;&lt;div&gt;Email Signing&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="312" y="223" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;DKIM SIGNING&lt;/div&gt;&lt;div&gt;Selector: s1&lt;/div&gt;&lt;div&gt;Private Key&lt;/div&gt;&lt;div&gt;Digital Signature&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="309" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;DNS&lt;/div&gt;&lt;div&gt;s1._domainkey.abctraining.edu&lt;/div&gt;&lt;div&gt;Public Key&lt;/div&gt;" vertex="1">
+          <mxGeometry height="63" width="173" x="304" y="441" as="geometry" />
+        </mxCell>
+        <mxCell id="UV9Y0IfonfwzCure9Kj9-32" edge="1" parent="1" source="UV9Y0IfonfwzCure9Kj9-24" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.376;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;startSize=8;endSize=8;" target="UV9Y0IfonfwzCure9Kj9-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

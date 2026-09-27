@@ -1,0 +1,45 @@
+ABC Training Institute
+Project: NS-P09 Email Domain Security
+Scenario: Two-Campus Training Institute
+
+Domain:
+abctraining.edu
+
+SPF Record:
+v=spf1 include:_spf.google.com ~all
+
+Purpose:
+Allow authorized Google mail servers to send emails for
+the institute domain used by both Campus A and Campus B.
+
+SPF Components:
+
+v=spf1
+Identifies this as an SPF version 1 record.
+
+include:_spf.google.com
+Authorizes Google's mail servers to send email for
+abctraining.edu.
+
+~all
+SoftFail for other unauthorized sending servers.
+These messages should be treated as suspicious and
+reviewed by the receiving mail system.
+
+Two-Campus Implementation:
+
+Campus A - Main Campus
+Uses the institute's authorized Google mail service.
+
+Campus B - Branch Campus
+Uses the same authorized Google mail service.
+
+Security Objective:
+Only authorized mail infrastructure should send email
+using the abctraining.edu domain.
+
+Testing:
+SPF PASS = Authorized Google mail server.
+
+SPF FAIL / SOFTFAIL = Sender is not authorized by the
+SPF policy and requires further investigation.
