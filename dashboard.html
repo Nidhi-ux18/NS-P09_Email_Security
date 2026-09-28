@@ -1,154 +1,204 @@
+
 <!DOCTYPE html>
 
 <html>
 <head>
+
     <title>NS-P09 Email Domain Security</title>
 
-```
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        background: #f4f7f5;
-    }
+    <style>
 
-    header {
-        background: #e91e63;
-        color: white;
-        padding: 25px;
-        text-align: center;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f7f5;
+        }
 
-    .container {
-        width: 90%;
-        max-width: 900px;
-        margin: 30px auto;
-    }
+        header {
+            background: #e91e63;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
 
-    .card {
-        background: white;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px #ccc;
-    }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
 
-    button {
-        padding: 10px 18px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #ccc;
+        }
 
-    input {
-        padding: 10px;
-        width: 90%;
-        max-width: 400px;
-    }
+        button {
+            padding: 10px 18px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
 
-    .result {
-        margin-top: 15px;
-        padding: 12px;
-        background: #eef5ee;
-        word-break: break-word;
-    }
-</style>
-```
+        input {
+            padding: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 12px;
+            background: #eef5ee;
+            word-break: break-word;
+        }
+
+    </style>
 
 </head>
 
 <body>
 
 <header>
+
     <h1>ABC Training Institute</h1>
+
     <p>Email Domain Security System</p>
+
     <p>NS-P09 - SPF, DKIM and DMARC</p>
+
 </header>
+
 
 <div class="container">
 
-```
-<div class="card">
-    <h2>SPF Security</h2>
 
-    <p>
-        Check the SPF TXT record of an email domain.
-    </p>
+    <!-- SPF -->
 
-    <input
-        type="text"
-        id="spfDomain"
-        placeholder="Enter domain"
-        value="google.com"
-    >
+    <div class="card">
 
-    <br>
+        <h2>SPF Security</h2>
 
-    <button onclick="checkSPF()">
-        Check SPF
-    </button>
+        <p>
+            Check the SPF TXT record of an email domain.
+        </p>
 
-    <div id="spfResult" class="result">
-        SPF result will appear here.
+        <input
+            type="text"
+            id="spfDomain"
+            placeholder="Enter domain"
+            value="google.com"
+        >
+
+        <br>
+
+        <button onclick="checkSPF()">
+            Check SPF
+        </button>
+
+        <div id="spfResult" class="result">
+            SPF result will appear here.
+        </div>
+
     </div>
-</div>
 
 
-<div class="card">
-    <h2>DMARC Security</h2>
+    <!-- DMARC -->
 
-    <p>
-        Check the DMARC TXT record of an email domain.
-    </p>
+    <div class="card">
 
-    <input
-        type="text"
-        id="dmarcDomain"
-        placeholder="Enter domain"
-        value="google.com"
-    >
+        <h2>DMARC Security</h2>
 
-    <br>
+        <p>
+            Check the DMARC TXT record of an email domain.
+        </p>
 
-    <button onclick="checkDMARC()">
-        Check DMARC
-    </button>
+        <input
+            type="text"
+            id="dmarcDomain"
+            placeholder="Enter domain"
+            value="google.com"
+        >
 
-    <div id="dmarcResult" class="result">
-        DMARC result will appear here.
+        <br>
+
+        <button onclick="checkDMARC()">
+            Check DMARC
+        </button>
+
+        <div id="dmarcResult" class="result">
+            DMARC result will appear here.
+        </div>
+
     </div>
+
+
+    <!-- DKIM -->
+
+    <div class="card">
+
+        <h2>DKIM Security</h2>
+
+        <p>
+            DKIM verifies an email using a selector and public key.
+        </p>
+
+        <button onclick="openDKIM()">
+            Open DKIM Module
+        </button>
+
+    </div>
+
+
+    <!-- Email Header -->
+
+    <div class="card">
+
+        <h2>Email Header Security</h2>
+
+        <p>
+            Analyze email headers and check SPF, DKIM, DMARC
+            authentication and alignment.
+        </p>
+
+        <button onclick="openEmailHeaderAnalyzer()">
+            Open Email Header Analyzer
+        </button>
+
+    </div>
+
+
+    <!-- TWO CAMPUS SCENARIO -->
+
+    <div class="card">
+
+        <h2>Two-Campus Training Institute Scenario</h2>
+
+        <p>
+            Demonstrates secure email communication between
+            the Main Campus and Branch Campus using SPF,
+            DKIM and DMARC.
+        </p>
+
+        <p>
+            It also demonstrates how an external or spoofed
+            email can be identified through email authentication
+            and domain alignment checks.
+        </p>
+
+        <button onclick="openCampusScenario()">
+            Open Two-Campus Scenario
+        </button>
+
+    </div>
+
+
 </div>
 
-
-<div class="card">
-    <h2>DKIM Security</h2>
-
-    <p>
-        DKIM verifies an email using a selector and public key.
-    </p>
-
-    <button onclick="openDKIM()">
-        Open DKIM Module
-    </button>
-</div>
-
-
-<div class="card">
-    <h2>Email Header Security</h2>
-
-    <p>
-        Analyze email headers and check SPF, DKIM, DMARC
-        authentication and alignment.
-    </p>
-
-    <button onclick="openEmailHeaderAnalyzer()">
-        Open Email Header Analyzer
-    </button>
-</div>
-```
-
-</div>
 
 <script>
+
 
 async function checkSPF() {
 
@@ -159,38 +209,50 @@ async function checkSPF() {
         document.getElementById("spfResult");
 
     if (!domain) {
-        result.innerHTML = "Please enter a domain.";
+
+        result.innerHTML =
+            "Please enter a domain.";
+
         return;
     }
 
-    result.innerHTML = "Checking SPF...";
+    result.innerHTML =
+        "Checking SPF...";
 
     try {
 
         const response =
-            await fetch(`/api/spf?domain=${encodeURIComponent(domain)}`);
+            await fetch(
+                `/api/spf?domain=${encodeURIComponent(domain)}`
+            );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (data.record) {
 
             result.innerHTML =
                 "<b>SPF FOUND ✅</b><br><br>" +
-                "<b>Domain:</b> " + data.domain +
-                "<br><b>SPF Record:</b> " + data.record;
+                "<b>Domain:</b> " +
+                data.domain +
+                "<br><b>SPF Record:</b> " +
+                data.record;
 
         } else {
 
             result.innerHTML =
                 "<b>SPF NOT FOUND ❌</b><br>" +
                 data.message;
+
         }
 
     } catch (error) {
 
         result.innerHTML =
             "Unable to connect to backend server.";
+
     }
+
 }
 
 
@@ -203,50 +265,76 @@ async function checkDMARC() {
         document.getElementById("dmarcResult");
 
     if (!domain) {
-        result.innerHTML = "Please enter a domain.";
+
+        result.innerHTML =
+            "Please enter a domain.";
+
         return;
     }
 
-    result.innerHTML = "Checking DMARC...";
+    result.innerHTML =
+        "Checking DMARC...";
 
     try {
 
         const response =
-            await fetch(`/api/dmarc?domain=${encodeURIComponent(domain)}`);
+            await fetch(
+                `/api/dmarc?domain=${encodeURIComponent(domain)}`
+            );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (data.record) {
 
             result.innerHTML =
                 "<b>DMARC FOUND ✅</b><br><br>" +
-                "<b>Domain:</b> " + data.domain +
-                "<br><b>DMARC Record:</b> " + data.record;
+                "<b>Domain:</b> " +
+                data.domain +
+                "<br><b>DMARC Record:</b> " +
+                data.record;
 
         } else {
 
             result.innerHTML =
                 "<b>DMARC NOT FOUND ❌</b><br>" +
                 data.message;
+
         }
 
     } catch (error) {
 
         result.innerHTML =
             "Unable to connect to backend server.";
+
     }
+
 }
 
 
 function openDKIM() {
-    window.location.href = "02_DKIM/DKIM.html";
+
+    window.location.href =
+        "02_DKIM/DKIM.html";
+
 }
 
 
 function openEmailHeaderAnalyzer() {
+
     window.location.href =
         "04_Email_Headers/Email_Header_Analyzer.html";
+
 }
+
+
+function openCampusScenario() {
+
+    window.location.href =
+        "campus.html";
+
+}
+
 
 </script>
 
